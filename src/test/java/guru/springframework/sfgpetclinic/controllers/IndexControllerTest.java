@@ -4,10 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.*;
 
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 class IndexControllerTest {
 
@@ -51,5 +53,45 @@ class IndexControllerTest {
             Thread.sleep(5000);
             System.out.println("Testing time out... You can't see me.");
         });
+    }
+
+    @Test
+    void testAssumptionTrue() {
+        assumeTrue("NEDIM".equalsIgnoreCase(System.getenv("JAVA_HOME")));
+    }
+
+    @Test
+    void testAssumptionTrueWhenAssumptionIsTrue() {
+        assumeTrue("NEDIM".equalsIgnoreCase("nedim"));
+    }
+
+    @EnabledOnOs(OS.MAC)
+    @Test
+    void testMeOnMacOS() {
+    }
+
+    @EnabledOnOs(OS.WINDOWS)
+    @Test
+    void testMeOnWindowsOS() {
+    }
+
+    @EnabledOnJre(JRE.JAVA_8)
+    @Test
+    void testMeOnJava8() {
+    }
+
+    @EnabledOnJre(JRE.JAVA_11)
+    @Test
+    void testMeOnJava11() {
+    }
+
+    @EnabledIfEnvironmentVariable(named = "USERNAME", matches = "Nedim")
+    @Test
+    void testIfUserNedim() {
+    }
+
+    @EnabledIfEnvironmentVariable(named = "USERNAME", matches = "Amela")
+    @Test
+    void testIfUserAmela() {
     }
 }
